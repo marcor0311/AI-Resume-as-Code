@@ -1,0 +1,22 @@
+kind: experience
+id: experience-observatory
+title: Platform Engineer
+status: verified
+organization: Cedar Observatory
+location: San José, Costa Rica
+start_date: "2022-04"
+end_date: present
+tags: [Python, observability, incident response, workflows]
+related: [project-reliability]
+facts:
+  - id: ingestion
+    text: Automated a Python data ingestion workflow and reduced processing time by 25%.
+    status: verified
+    mentions: [skill-python]
+    sources: [evidence-release]
+  - id: latency
+    text: Built service dashboards and lowered alert triage time by 15%.
+    status: verified
+  - id: orchestration
+    text: Operated a Kubernetes cluster.
+    status: needs_confirmation

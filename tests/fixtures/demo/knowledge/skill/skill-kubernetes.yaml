@@ -1,0 +1,5 @@
+kind: skill
+id: skill-kubernetes
+title: Kubernetes
+status: verified
+aliases: [K8s]

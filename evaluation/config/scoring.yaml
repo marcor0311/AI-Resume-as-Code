@@ -1,0 +1,151 @@
+version: 1.4.1
+weights:
+  overall: {readiness: 25, job_match: 75}
+  readiness: {text: 25, structure: 20, contact: 10, dates: 15, layout: 20, characters: 10}
+  job_match: {required: 45, preferred: 5, responsibilities: 50, title: 0, keywords: 0}
+  semantic: {demonstration: 50, transferability: 25, depth: 25}
+readiness_sections: {experience_or_projects: 40, education: 20, skills: 25, credentials: 15}
+status_points: {MET: 100, PARTIALLY_MET: 45, NOT_DEMONSTRATED: 0, NOT_MET: 0, UNCERTAIN: 0}
+thresholds:
+  min_text_characters: 140
+  max_bad_character_fraction: 0.01
+  min_column_lines: 3
+  column_split_fraction: 0.48
+  row_tolerance_points: 10
+  min_readable_font_points: 5
+  repeated_line_count: 3
+  repeated_term_count: 6
+  keyword_list_size: 7
+  max_stuffing_penalty: 20
+  stuffing_penalty_per_flag: 7
+  max_match_without_requirements: 20
+  title_partial_cap: 50
+  transferability_cap: 45
+  max_evidence_lines: 5
+  min_context_words: 3
+  min_requirement_overlap: 0.72
+  min_partial_overlap: 0.42
+  max_pdf_pages: 20
+  max_pdf_bytes: 12000000
+  max_posting_bytes: 150000
+refinement:
+  max_iterations: 2
+semantic_points:
+  demonstrated: 100
+  mention: 20
+  partial_wording: 30
+  incomplete_qualification: 55
+  partial_use: 65
+  description_depth: 65
+  structured_entry_depth: 80
+  outcome_depth: 100
+language_levels:
+  basic: 1
+  beginner: 1
+  a1: 1
+  a2: 2
+  intermediate: 3
+  b1: 3
+  b2: 4
+  business level: 4
+  professional proficiency: 4
+  advanced: 5
+  c1: 5
+  fluency: 5
+  fluent: 5
+  proficient: 5
+  c2: 6
+  native: 6
+  bilingual: 6
+sections:
+  summary: [summary, professional summary, profile, objective]
+  experience: [experience, work experience, professional experience, employment history, work history]
+  projects: [projects, selected projects, personal projects]
+  achievements: [achievements, accomplishments]
+  education: [education, academic background, academic history]
+  skills: [skills, technical skills, core competencies, technologies]
+  credentials: [certifications, certificates, licenses, training, certifications and licenses]
+  languages: [languages, language skills]
+  other: [additional experience, publications, interests, volunteer experience]
+posting_sections:
+  required: [requirements, qualifications, required, required skills, required qualifications, minimum qualifications, must have, essential qualifications, "what you'll need", what you bring, "what you'll bring", what you will bring, what we look for]
+  preferred: [preferred, preferred skills, preferred qualifications, desired qualifications, nice to have, bonus]
+  responsibilities: [responsibilities, responsibility, key responsibilities, duties, what you will do, "what you'll do", "how you'll contribute", how you will contribute, your responsibilities will include, the impact you will have]
+  informational: [about us, about the company, benefits, compensation, equal opportunity, how to apply, work mode, hybrid roles, requisition id, additional locations, compliance, our commitment to diversity and inclusion]
+  title: [job title, title, role, position]
+category_cues:
+  required: [required, must have, must, minimum, essential, at least]
+  preferred: [preferred, preferably, ideally, desirable, nice to have, a plus]
+  alternatives: [or, either, equivalent]
+  excluded: [race, ethnicity, religion, marital status, disability, age, date of birth, country of birth, birthplace, skin color, gender identity, sexual orientation, nationality, citizenship, gender, pregnancy, family status, veteran status, national origin, equal opportunity]
+  non_evidence: [no experience, no prior, no production experience, never used, lack experience, without experience, not certified, expired, expiration, learning, interested in, familiar with, coursework only, exposure to]
+  actions: [built, used, applied, designed, managed, implemented, deployed, migrated, led, developed, delivered, automated, automating, cut, reduced, improved, operated, maintained, analyzed, tested, optimized, orchestrated, monitored, administered, owned, shipped, wrote, created, integrated, supported, resolved, facilitated, configured, documented, provided, guided, collaborated, mentored, assessed, addressed, prioritized, scheduled, fostered, showcased, coached, piloted, partnered, advised, recommended, helped, assisted, pulled, captured, triaged, ranked, calibrated, adjusted, tuned, standardized, powered]
+  role_words: [engineer, developer, architect, analyst, administrator, specialist, coordinator, manager, director, consultant, scientist, designer, lead, technician]
+scope_aliases:
+  production: [production, live environment, live service, customer-facing]
+  enterprise: [enterprise, organization-wide, company-wide]
+  leadership: [leadership, led a team, managed a team, managed engineers, directed a team]
+  large_scale: [at scale, large-scale, high-volume]
+  regulated: [regulated, compliance-controlled, audit-controlled]
+  ai_driven_development: [ai-driven development, ai-driven workflows, ai-augmented workflows, ai-assisted development, ai-assisted support workflow, ai-assisted workflow]
+  backend: [backend, back-end, back end]
+concepts:
+  python: {label: Python, kind: skill, aliases: [python]}
+  javascript: {label: JavaScript, kind: skill, aliases: [javascript, ecmascript]}
+  typescript: {label: TypeScript, kind: skill, aliases: [typescript]}
+  java: {label: Java, kind: skill, aliases: [java]}
+  scala: {label: Scala, kind: skill, aliases: [scala]}
+  c-plus-plus: {label: C++, kind: skill, aliases: [c++]}
+  c-sharp: {label: C#, kind: skill, aliases: [c#]}
+  dotnet: {label: .NET, kind: skill, aliases: [.net, dotnet]}
+  go: {label: Go, kind: skill, aliases: [golang, go programming]}
+  rust: {label: Rust, kind: skill, aliases: [rust]}
+  sql: {label: SQL, kind: skill, aliases: [sql, structured query language]}
+  postgresql: {label: PostgreSQL, kind: skill, aliases: [postgresql, postgres]}
+  mysql: {label: MySQL, kind: skill, aliases: [mysql, mariadb]}
+  react: {label: React, kind: skill, aliases: [react.js, reactjs, react]}
+  kubernetes: {label: Kubernetes, kind: skill, aliases: [kubernetes, k8s]}
+  openshift: {label: OpenShift, kind: skill, aliases: [openshift, red hat openshift], adjacent: [kubernetes]}
+  docker: {label: Docker, kind: skill, aliases: [docker]}
+  podman: {label: Podman, kind: skill, aliases: [podman], adjacent: [docker]}
+  terraform: {label: Terraform, kind: skill, aliases: [terraform]}
+  opentofu: {label: OpenTofu, kind: skill, aliases: [opentofu, open tofu], adjacent: [terraform]}
+  aws: {label: AWS, kind: skill, aliases: [aws, amazon web services], adjacent: [azure, gcp]}
+  aws-lambda: {label: AWS Lambda, kind: skill, aliases: [aws lambda, lambda]}
+  amazon-s3: {label: Amazon S3, kind: skill, aliases: [amazon s3, aws s3, s3]}
+  azure: {label: Azure, kind: skill, aliases: [microsoft azure, azure], adjacent: [aws, gcp]}
+  gcp: {label: Google Cloud, kind: skill, aliases: [google cloud platform, google cloud, gcp], adjacent: [aws, azure]}
+  linux: {label: Linux, kind: skill, aliases: [linux]}
+  ci-cd: {label: CI/CD, kind: skill, aliases: [ci/cd, cicd, continuous integration and delivery, continuous integration and deployment]}
+  git: {label: Git, kind: skill, aliases: [git, git version control]}
+  rest: {label: REST APIs, kind: skill, aliases: [rest api, rest apis, restful api, restful apis]}
+  airflow: {label: Apache Airflow, kind: skill, aliases: [apache airflow, airflow]}
+  dbt: {label: dbt, kind: skill, aliases: [dbt, data build tool]}
+  spark: {label: Apache Spark, kind: skill, aliases: [apache spark, pyspark]}
+  excel: {label: Microsoft Excel, kind: skill, aliases: [microsoft excel, excel]}
+  power-bi: {label: Power BI, kind: skill, aliases: [power bi, powerbi]}
+  tableau: {label: Tableau, kind: skill, aliases: [tableau]}
+  observability: {label: Observability, kind: practice, aliases: [observability, telemetry]}
+  incident-response: {label: Incident response, kind: practice, aliases: [incident response, incident management]}
+  data-pipelines: {label: Data pipelines, kind: practice, aliases: [data pipeline, data pipelines, data workflows, data ingestion workflow, data ingestion workflows, etl pipeline, etl pipelines]}
+  etl: {label: ETL, kind: practice, aliases: [etl, extract transform load, "extract, transform, load"]}
+  data-warehousing: {label: Data warehousing, kind: practice, aliases: [data warehousing, data warehouse, data warehouses]}
+  big-data: {label: Big data, kind: practice, aliases: [big data, big-data technologies]}
+  consulting: {label: Consulting, kind: practice, aliases: [consulting, technical consulting]}
+  pre-sales: {label: Pre-sales, kind: practice, aliases: [pre-sales, presales]}
+  agentic-solutions: {label: Agentic solutions, kind: practice, aliases: [agentic solution, agentic solutions]}
+  stakeholder-collaboration: {label: Stakeholder collaboration, kind: practice, aliases: [collaborate with, collaborated with, collaboration with]}
+  prioritization: {label: Prioritization, kind: practice, aliases: [prioritization, prioritizing, prioritized, prioritise, prioritised]}
+  time-management: {label: Time management, kind: practice, aliases: [time management, managed delivery schedules, managed project schedules]}
+  dashboards: {label: Dashboards, kind: practice, aliases: [dashboards, dashboard]}
+  bachelor: {label: Bachelor's degree, kind: education, aliases: [bachelor's, bachelor, undergraduate degree, bachelor's degree, b.s., b.sc., b.eng., bachelor of science, bachelor of engineering]}
+  master: {label: Master's degree, kind: education, aliases: [master's, master's degree, master of science, master of arts, mba]}
+  doctorate: {label: Doctorate, kind: education, aliases: [phd, phd degree, doctorate]}
+  pmp: {label: PMP, kind: credential, aliases: [pmp, project management professional]}
+  cka: {label: Certified Kubernetes Administrator, kind: credential, aliases: [cka, certified kubernetes administrator]}
+  aws-sa: {label: AWS Certified Solutions Architect, kind: credential, aliases: [aws certified solutions architect, aws solutions architect certification]}
+  cissp: {label: CISSP, kind: credential, aliases: [cissp, certified information systems security professional]}
+  english: {label: English, kind: language, aliases: [english]}
+  spanish: {label: Spanish, kind: language, aliases: [spanish]}
+  french: {label: French, kind: language, aliases: [french]}
+  portuguese: {label: Portuguese, kind: language, aliases: [portuguese]}

@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+/work/
+/knowledge/
+/resumes/
+/evaluations/
+/comparisons/
+/rendercv_output/
+/.render-assets/
+/applications/
+/agents-results/

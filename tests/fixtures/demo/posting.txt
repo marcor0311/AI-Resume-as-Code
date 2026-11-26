@@ -1,0 +1,7 @@
+Platform Reliability Engineer
+Juniper Research Lab
+
+Required: Develop data workflows using Python.
+Required: Operate production Kubernetes clusters.
+Preferred: Build observability dashboards.
+Responsibility: Write incident response playbooks and support rollbacks.
