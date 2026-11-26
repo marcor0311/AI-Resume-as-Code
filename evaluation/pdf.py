@@ -89,7 +89,7 @@ def _columns(blocks: list[tuple[float, float, str]], left_edge: float, width: fl
     left, right = set(), set()
     for x, y, text in blocks:
         # Short right-aligned dates are common in a clean one-column resume.
-        if len(tokens(text)) < 2 or DATE_TOKEN.fullmatch(fold(text)):
+        if not tokens(text) or DATE_TOKEN.fullmatch(fold(text)):
             continue
         side = right if x >= cut else left
         side.add(round(y / limits.row_tolerance_points))

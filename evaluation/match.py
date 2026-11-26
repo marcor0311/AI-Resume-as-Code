@@ -62,6 +62,22 @@ CONCURRENT_CUSTOMERS = re.compile(
 CUSTOMER_WORK = re.compile(r"^(?:you will )?work (?:directly )?with (concurrent customers)(?: to (.+))?$")
 CLOUD_PROVIDER = re.compile(r"\b(?:aws|azure|gcp|google cloud|amazon web services)\b")
 ABILITY_VERBS = {"foster", "showcase", "demonstrate", "coach"}
+# An engineering discipline in a tenure clause, such as "software engineering or platform engineering".
+ENGINEERING_SCOPE = re.compile(
+    r"\b(?:(?:software|platform|data|cloud|backend|back-end|systems?|infrastructure|application|solutions?)\s+)*"
+    r"(?:engineering|development)$"
+)
+ENGINEERING_TITLE = re.compile(r"\b(?:engineer|developer|programmer|architect)\b")
+# Soft skills are demonstrated by what someone did, not by naming the skill.
+SOFT_SKILLS = {
+    "collaboration": (re.compile(r"\bcollaborat|\bteamwork\b"),
+                      re.compile(r"\b(?:collaborated|partnered|worked (?:closely )?with|coordinated with|cross-functional)\b")),
+    "communication": (re.compile(r"\bcommunicat"),
+                      re.compile(r"\b(?:communicated|presented|explained|documented|trained|demonstrated|wrote|reported)\b")),
+    "problem solving": (re.compile(r"\bproblem[- ]solving\b|\banalytical thinking\b"),
+                        re.compile(r"\b(?:troubleshot|resolved|diagnosed|debugged|investigated|root cause|fixed|solved)\b")),
+}
+SOFT_SKILL_CLAUSE = re.compile(r"\b(?:skills?|abilities|ability|thinking)\b")
 
 
 @dataclass
@@ -442,6 +458,10 @@ def _duration_scope(req: Requirement, line: Line, rubric: Rubric) -> bool:
     fragments = re.split(r"\s+or\s+", remainder) if alternative else [remainder]
     scopes = [expected for fragment in fragments if (expected := stems(fragment) - {"professional", "relevant", "related"})]
     actual = stems(line.text)
+    title = fold(line.text).partition(",")[0]
+    if (line.section == "experience" and ranges(line.text) and ENGINEERING_TITLE.search(title)
+            and any(ENGINEERING_SCOPE.search(" ".join(fold(fragment).split())) for fragment in fragments)):
+        return True
     if (scopes == [{"technical", "role"}] and line.section == "experience" and ranges(line.text)
             and TECHNICAL_TITLE.search(fold(line.text).partition(",")[0])):
         return True
@@ -510,6 +530,33 @@ def years_finding(req: Requirement, lines: list[Line], rubric: Rubric, as_of: da
     return Finding("NOT_DEMONSTRATED", "The PDF provides no usable duration for the requested experience.")
 
 
+def soft_skill_finding(req: Requirement, lines: list[Line], rubric: Rubric) -> Finding | None:
+    clause = fold(req.clause)
+    if req.kind == "responsibility" or "ability to" in clause or not SOFT_SKILL_CLAUSE.search(clause):
+        return None
+    wanted = [name for name, (asked, _) in SOFT_SKILLS.items() if asked.search(clause)]
+    if not wanted:
+        return None
+    points = rubric.semantic_points
+    found = {}
+    for line in lines:
+        if line.section not in CONTEXT or is_negated(line.text):
+            continue
+        text = fold(line.text)
+        for name in wanted:
+            if name not in found and SOFT_SKILLS[name][1].search(text):
+                found[name] = line
+    evidence = [line.evidence("demonstrated use") for line in dict.fromkeys(found.values())]
+    if len(found) == len(wanted):
+        return Finding("MET", "Experience bullets show the requested skills in practice.", evidence,
+                       demonstration=points.demonstrated, depth=points.description_depth)
+    if found:
+        missing = ", ".join(name for name in wanted if name not in found)
+        return Finding("PARTIALLY_MET", f"Experience shows some of the requested skills. Not shown: {missing}.", evidence,
+                       demonstration=points.partial_use, depth=points.description_depth)
+    return Finding("NOT_DEMONSTRATED", "No experience bullet shows these skills in practice.")
+
+
 def requirement_finding(req: Requirement, lines: list[Line], rubric: Rubric, as_of: date | None) -> Finding:
     if req.category == "informational":
         return Finding("NOT_APPLICABLE", "This posting line is informational or outside permitted scoring criteria.")
@@ -517,6 +564,8 @@ def requirement_finding(req: Requirement, lines: list[Line], rubric: Rubric, as_
         return Finding("UNCERTAIN", "The PDF has no usable text that supports an assessment.")
     if req.kind == "years":
         return years_finding(req, lines, rubric, as_of)
+    if soft := soft_skill_finding(req, lines, rubric):
+        return soft
     if not req.concepts or set(req.concepts) == {"time-management", "prioritization"}:
         if practice := practice_for(fold(req.clause)):
             return practice_finding(practice, req, lines, rubric)

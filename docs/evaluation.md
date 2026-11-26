@@ -73,6 +73,10 @@ The optional contextual layer uses rules and recorded PDF examples. It can surfa
 
 A partially met requirement whose only support is a mention, such as a skills-list entry or a term without an example of use, earns `thresholds.mention_only_points` (15) instead of the full partial value (45). Reports mark these rows with `mention_only: true`. When the evaluator flags keyword stuffing, bare mentions earn nothing. This keeps a skills list or repeated keywords from outranking real partial experience. Graded CV ladders against the saved postings verify the ordering: strong > good > partial > skills list, keyword stuffing, adjacent field > unrelated.
 
+### Tenure and soft skills
+
+A tenure clause that names an engineering discipline, such as "3+ years in software engineering or platform engineering", counts dated roles whose titles contain engineer, developer, programmer, or architect. Soft-skill qualifications (collaboration, communication, problem solving) are matched to what experience bullets show, such as "partnered with", "presented", or "troubleshot", rather than to the skill name. All requested skills shown is MET, some is PARTIALLY_MET. Column detection also counts one-word sidebar rows such as skill lists.
+
 ## Compare and refine
 
 Use the same original English posting, evaluator and rubric for each version, including an original PDF baseline or PDFs created by different agents.
