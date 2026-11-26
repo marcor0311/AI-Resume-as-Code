@@ -50,6 +50,7 @@ class Thresholds(Contract):
     max_pdf_pages: Positive
     max_pdf_bytes: Positive
     max_posting_bytes: Positive
+    mention_only_points: Percent
 
 
 class Refinement(Contract):

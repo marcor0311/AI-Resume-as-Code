@@ -69,6 +69,10 @@ For tools and technologies, the evaluator checks the individual statement that m
 
 The optional contextual layer uses rules and recorded PDF examples. It can surface stated outcomes and related technology and has no model version. It cannot infer unstated experience, verify credentials externally, reliably parse every conjunction, or certify real-world truth. Informational classifications, qualifiers, custom language and synonym coverage may need human review. The engine does not change career records, draft content, or the rubric.
 
+### Bare mentions (rubric 1.5.0)
+
+A partially met requirement whose only support is a mention, such as a skills-list entry or a term without an example of use, earns `thresholds.mention_only_points` (15) instead of the full partial value (45). Reports mark these rows with `mention_only: true`. When the evaluator flags keyword stuffing, bare mentions earn nothing. This keeps a skills list or repeated keywords from outranking real partial experience. Graded CV ladders against the saved postings verify the ordering: strong > good > partial > skills list, keyword stuffing, adjacent field > unrelated.
+
 ## Compare and refine
 
 Use the same original English posting, evaluator and rubric for each version, including an original PDF baseline or PDFs created by different agents.
@@ -102,7 +106,7 @@ The benchmark checks aligned, partial and unrelated PDFs, keyword repetition, eq
 | Partially aligned | 34.11 | 100.00 | 12.15 | 20.94 | 44.44 |
 | Unrelated | 31.75 | 100.00 | 9.00 | 12.50 | 0.00 |
 | Aligned, short posting | 100.00 | 100.00 | 100.00 | 94.75 | 100.00 |
-| Stuffed, same short posting | 53.50 | 100.00 | 38.00 | 15.00 | 100.00 |
+| Stuffed, same short posting | 25.00 | 100.00 | 0.00 | 15.00 | 100.00 |
 | Clinical data, unrelated candidate | 25.00 | 100.00 | 0.00 | 0.00 | 0.00 |
 | Data pipelines, partial evidence | 62.90 | 100.00 | 50.53 | 55.58 | 38.46 |
 | Cloud solutions, strong evidence | 85.05 | 100.00 | 80.06 | 79.46 | 45.00 |
@@ -112,7 +116,7 @@ The unrelated résumé satisfies the generic professional experience minimum, wh
 | Controlled revision | ATS Readiness before → after | Job Match before → after |
 | --- | ---: | ---: |
 | Unrelated profile, same text in one reading column | 80.00 → 100.00 | 0.00 → 0.00 |
-| Partial fit, verified Python use stated in Experience | 100.00 → 100.00 | 41.84 → 50.53 |
+| Partial fit, verified Python use stated in Experience | 100.00 → 100.00 | 37.11 → 50.53 |
 | Strong fit, customer lifecycle scope stated explicitly | 100.00 → 100.00 | 66.31 → 80.06 |
 
 When changing scoring rules, record the expected requirement outcomes before rerunning the same PDFs and postings. Include cases with absent evidence, a different job family, and equally readable PDFs with different qualifications. Preserve original reports. Save reevaluations under fresh IDs and compare the input hashes, individual findings, and actual score changes across engine versions. Use the regular comparison command for résumé changes scored by the same engine and rubric.

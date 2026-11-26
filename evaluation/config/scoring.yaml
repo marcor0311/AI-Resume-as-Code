@@ -1,4 +1,4 @@
-version: 1.4.1
+version: 1.5.0
 weights:
   overall: {readiness: 25, job_match: 75}
   readiness: {text: 25, structure: 20, contact: 10, dates: 15, layout: 20, characters: 10}
@@ -28,6 +28,7 @@ thresholds:
   max_pdf_pages: 20
   max_pdf_bytes: 12000000
   max_posting_bytes: 150000
+  mention_only_points: 15
 refinement:
   max_iterations: 2
 semantic_points:
@@ -128,15 +129,16 @@ concepts:
   observability: {label: Observability, kind: practice, aliases: [observability, telemetry]}
   incident-response: {label: Incident response, kind: practice, aliases: [incident response, incident management]}
   data-pipelines: {label: Data pipelines, kind: practice, aliases: [data pipeline, data pipelines, data workflows, data ingestion workflow, data ingestion workflows, etl pipeline, etl pipelines]}
-  etl: {label: ETL, kind: practice, aliases: [etl, extract transform load, "extract, transform, load"]}
+  etl: {label: ETL, kind: practice, aliases: [etl, extract transform load, "extract, transform, load", sql extract, data extract, data extracts]}
   data-warehousing: {label: Data warehousing, kind: practice, aliases: [data warehousing, data warehouse, data warehouses]}
   big-data: {label: Big data, kind: practice, aliases: [big data, big-data technologies]}
   consulting: {label: Consulting, kind: practice, aliases: [consulting, technical consulting]}
   pre-sales: {label: Pre-sales, kind: practice, aliases: [pre-sales, presales]}
   agentic-solutions: {label: Agentic solutions, kind: practice, aliases: [agentic solution, agentic solutions]}
-  stakeholder-collaboration: {label: Stakeholder collaboration, kind: practice, aliases: [collaborate with, collaborated with, collaboration with]}
+  stakeholder-collaboration: {label: Stakeholder collaboration, kind: practice, aliases: [collaborate with, collaborated with, collaboration with, partnered with, collaboration skills, collaboration]}
   prioritization: {label: Prioritization, kind: practice, aliases: [prioritization, prioritizing, prioritized, prioritise, prioritised]}
   time-management: {label: Time management, kind: practice, aliases: [time management, managed delivery schedules, managed project schedules]}
+  communication: {label: Communication, kind: practice, aliases: [communication and collaboration skills, communicated, communicates]}
   dashboards: {label: Dashboards, kind: practice, aliases: [dashboards, dashboard]}
   bachelor: {label: Bachelor's degree, kind: education, aliases: [bachelor's, bachelor, undergraduate degree, bachelor's degree, b.s., b.sc., b.eng., bachelor of science, bachelor of engineering]}
   master: {label: Master's degree, kind: education, aliases: [master's, master's degree, master of science, master of arts, mba]}

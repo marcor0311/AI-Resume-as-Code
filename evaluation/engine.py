@@ -1,6 +1,7 @@
 """Combine independently measured components and retain evidence for every decision."""
 
 from collections import Counter
+from dataclasses import replace
 from datetime import date, datetime, timezone
 from importlib.metadata import version
 from pathlib import Path
@@ -14,7 +15,7 @@ from .pdf import Document, contact_types, date_quality, extract
 from .posting import Requirement, parse
 from .text import fold, hits, matches, require_english
 
-ENGINE_VERSION = "1.4.1"
+ENGINE_VERSION = "1.5.0"
 SCORING_FILES = ("config.py", "engine.py", "match.py", "pdf.py", "posting.py", "practices.py", "text.py")
 NOTICE = (
     "This is an independent ATS approximation. Its scores do not reproduce a proprietary ATS "
@@ -144,13 +145,19 @@ def score_requirements(posting, lines, rubric: Rubric, as_of: date | None) -> li
     for req in posting.requirements:
         result = requirement_finding(req, lines, rubric, as_of)
         points = rubric.status_points.get(result.status)
+        bare = bool(result.evidence) and all(
+            item["basis"] in {"mention", "limited claim"} or item["section"] == "skills" for item in result.evidence
+        )
+        result = replace(result, mention_only=result.mention_only or bare)
+        if result.status == "PARTIALLY_MET" and result.mention_only:
+            points = min(points, rubric.thresholds.mention_only_points)
         evidence = unique_evidence(result.evidence, rubric.thresholds.max_evidence_lines)
         guidance = improvement(req, result)
         items.append(({
             "id": req.id, "category": req.category, "kind": req.kind,
             "importance": {"required": "high", "preferred": "medium", "informational": "none"}[req.category],
             "original_requirement": req.original, "posting_line": req.line, "status": result.status,
-            "points": points, "evidence": evidence, "resume_sections": list(dict.fromkeys(row["section"] for row in evidence)),
+            "points": points, "mention_only": result.mention_only, "evidence": evidence, "resume_sections": list(dict.fromkeys(row["section"] for row in evidence)),
             "explanation": result.explanation, "improvement_kind": guidance[0] if guidance else None,
             "recommended_improvement": guidance[1] if guidance else None,
         }, result))
@@ -208,6 +215,11 @@ def evaluate(
     groups = keyword_groups(job, rubric)
     terms = list(dict.fromkeys(term for group in groups for term in group))
     keyword_flags = stuffing(lines, terms, rubric)
+    if keyword_flags:
+        # Repetition already signals padding, so bare mentions earn nothing on top of it.
+        for row in rows:
+            if row["status"] == "PARTIALLY_MET" and row["mention_only"]:
+                row["points"] = 0
     matched = [term for term in terms if any(matches(line.text, term) and not is_negated(line.text) for line in lines)]
     keyword_coverage = [
         {"terms": list(group), "matched": [term for term in group if term in matched]} for group in groups

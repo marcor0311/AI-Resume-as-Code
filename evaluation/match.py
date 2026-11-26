@@ -72,6 +72,8 @@ class Finding:
     demonstration: float = 0
     transferable: float = 0
     depth: float = 0
+    # Set when the only support is a bare mention, such as a skills list entry.
+    mention_only: bool = False
 
 
 def stems(text: str) -> set[str]:
@@ -281,17 +283,19 @@ def concept_finding(key: str, req: Requirement, lines: list[Line], rubric: Rubri
             concept.kind == "credential" and EXPLICIT_EXPIRY.search(fold(line.text))
         ):
             direct.append(Finding("PARTIALLY_MET", "The phrase describes familiarity, study, or interest without demonstrated use.",
-                                  [row.evidence("limited claim") for row in rows], demonstration=points.mention))
+                                  [row.evidence("limited claim") for row in rows], demonstration=points.mention,
+                                  mention_only=True))
         elif structured_entry:
             direct.append(structured(concept, req, lines, index, rubric, as_of))
         elif action(line, rubric):
             direct.append(demonstrated_use(req, line, rows, rubric))
         else:
             direct.append(Finding("PARTIALLY_MET", "The term appears without a concrete example of application.",
-                                  [row.evidence("mention") for row in rows], demonstration=points.mention))
+                                  [row.evidence("mention") for row in rows], demonstration=points.mention,
+                                  mention_only=True))
     if direct:
         order = {"MET": 3, "PARTIALLY_MET": 2, "NOT_MET": 1}
-        best = max(direct, key=lambda finding: (order[finding.status], finding.depth))
+        best = max(direct, key=lambda finding: (order[finding.status], not finding.mention_only, finding.depth))
         negative = next((item for item in direct if item.status == "NOT_MET"), None)
         if negative and best.status != "NOT_MET":
             if any(item["basis"] not in {"mention", "limited claim"} for item in best.evidence):
@@ -344,7 +348,9 @@ def generic_finding(req: Requirement, lines: list[Line], rubric: Rubric, require
         return Finding("MET", "The relevant wording occurs in a qualifying experience or structured entry.",
                        evidence, demonstration=points.demonstrated, depth=context_strength(excerpts[0], rubric))
     if evidence:
-        return Finding("PARTIALLY_MET", "Only some of the requirement wording or its context is visible.", evidence, demonstration=points.partial_wording)
+        return Finding("PARTIALLY_MET", "Only some of the requirement wording or its context is visible.", evidence,
+                       demonstration=points.partial_wording,
+                       mention_only=all(line.section == "skills" for line in excerpts))
     return Finding("NOT_DEMONSTRATED", "No sufficiently specific evidence was found in the submitted PDF.")
 
 

@@ -28,7 +28,7 @@ EXPECTED_SCORES = {
     "strong": (STRONG, 100.0, 100, 94.84),
     "partial": (PARTIAL, 34.11, 12.15, 20.94),
     "unrelated": (UNRELATED, 31.75, 9.0, 12.5),
-    "stuffed": (STUFFED, 54.17, 38.9, 20.0),
+    "stuffed": (STUFFED, 26.5, 2.0, 20.0),
 }
 
 
@@ -60,6 +60,8 @@ class ScoreRegression(unittest.TestCase):
                   for name, spec in EXPECTED_SCORES.items()}
         self.assertEqual(max(scores, key=scores.get), "strong")
         self.assertGreater(scores["partial"], scores["unrelated"])
+        # Keyword padding must never outrank real partial evidence.
+        self.assertGreater(scores["partial"], scores["stuffed"])
 
 
 class CliTests(Root):
