@@ -1,0 +1,20 @@
+role: Platform Reliability Engineer
+employer: Juniper Research Lab
+requirements:
+  - id: python
+    kind: mandatory
+    text: Develop Python data workflows
+    quote: "Required: Develop data workflows using Python."
+  - id: kubernetes
+    kind: mandatory
+    text: Operate production Kubernetes clusters
+    quote: "Required: Operate production Kubernetes clusters."
+  - id: dashboards
+    kind: preferred
+    text: Build observability dashboards
+    quote: "Preferred: Build observability dashboards."
+  - id: playbooks
+    kind: responsibility
+    text: Write incident response playbooks and support rollbacks
+    quote: "Responsibility: Write incident response playbooks and support rollbacks."
+keywords: [Python, Kubernetes, observability dashboards, incident response, rollbacks]

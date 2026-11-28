@@ -1,0 +1,21 @@
+profile: profile-morgan
+as_of: "2026-11-25"
+language: english
+summary:
+  - text: Automated data ingestion workflows in Python.
+    evidence: [experience-observatory#ingestion]
+entries:
+  - record: experience-observatory
+    highlights:
+      - text: Cut data ingestion processing time by 25% by automating the Python workflow.
+        evidence: [experience-observatory#ingestion]
+      - text: Built service dashboards and lowered alert triage time by 15%.
+        evidence: [experience-observatory#latency]
+  - record: project-reliability
+    highlights:
+      - text: Wrote incident response playbooks covering rollback and escalation.
+        evidence: [project-reliability#runbooks]
+  - record: education-systems
+  - record: cert-operations
+  - record: language-spanish
+skills: [skill-python]

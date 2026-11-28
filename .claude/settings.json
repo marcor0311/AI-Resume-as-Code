@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "effortLevel": "low",
+  "env": {
+    "CLAUDE_CODE_SUBAGENT_MODEL": "claude-haiku-5-5",
+    "BASH_MAX_OUTPUT_LENGTH": "8000"
+  },
+  "permissions": {
+    "deny": ["Agent", "WebSearch", "WebFetch"]
+  }
+}

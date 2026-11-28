@@ -1,0 +1,5 @@
+kind: evidence
+id: evidence-release
+title: Ingestion release notes
+status: verified
+excerpt: Processing time was 25% lower after deploying the Python workflow.
