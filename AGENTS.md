@@ -11,3 +11,15 @@ Use the owner's private data root for professional records, postings, and output
 - The owner confirms career facts. A past tailored resume can guide wording but supplies no new evidence. Keep unconfirmed claims out of final resumes.
 
 Run commands from the engine checkout with `CAREER_DATA_ROOT` or `--root` set to the owner's private directory. [Workflow and schemas](docs/workflows.md)
+
+## Gobernanza de gasto (FinOps para agentes)
+
+Trabaja siempre en esfuerzo bajo y formato ahorrativo.
+
+- No uses subagentes (`Agent`, `spawn_agent`, `send_message`) ni trabajo en paralelo. Procesa un elemento a la vez.
+- No hagas polling: las pruebas largas van en primer plano con timeout amplio, en una sola llamada.
+- Ejecuta solo las pruebas afectadas (`pytest tests/test_x.py -q -x`), nunca la suite completa salvo que se pida. Limita la salida (`| tail -40`, solo errores).
+- Lee fragmentos (`grep -n`, `sed -n`), no archivos completos. No releas lo que ya leíste.
+- Al generar pruebas: máximo un archivo de prueba por paso, casos mínimos y representativos; no generes fixtures masivos ni bucles de regeneración.
+- Si una prueba falla dos veces por la misma causa, detente y reporta.
+- Respuestas breves. Al terminar cada elemento, resume el estado en 3–5 líneas para retomarlo en otra sesión.
